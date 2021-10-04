@@ -1,0 +1,36 @@
+# Node modules
+node_modules
+
+# Adonis directory for storing tmp files
+tmp
+
+# Environment variables, never commit this file
+.env
+
+# The development sqlite file
+database/*.sqlite
+# Node modules
+node_modules
+
+# Adonis directory for storing tmp files
+tmp
+
+# Environment variables, never commit this file
+
+# The development sqlite file
+
+package-lock.json
+
+*.log
+
+.vscode
+.idea
+
+.npm
+npm
+configstore
+dump
+.dump
+.bash_history
+bash_history
+data/*
