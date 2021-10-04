@@ -61,8 +61,13 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 100),
                 ElevatedButton(
                     onPressed: () async {
-                      await presenter.auth(controllers['username']!.text,
-                          controllers['password']!.text);
+                      await presenter
+                          .auth(controllers['username']!.text,
+                              controllers['password']!.text)
+                          .catchError((e) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text("$e")));
+                      });
                     },
                     child: Text(R.string.msgSingIn)),
                 SizedBox(
@@ -70,8 +75,13 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      await presenter.singup(controllers['username']!.text,
-                          controllers['password']!.text);
+                      await presenter
+                          .singup(controllers['username']!.text,
+                              controllers['password']!.text)
+                          .catchError((e) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text("$e")));
+                      });
                     },
                     child: Text(R.string.msgSingUp)),
               ],

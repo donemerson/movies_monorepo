@@ -24,6 +24,6 @@ LoadMovies makeRemoteLoadMovies([LocalUser? localUser]) {
 
   return RemoteLoadMovies(
     httpClient: httpClient,
-    url: makeApiUrl('movies'),
+    url: makeApiUrl(''),
   );
 }

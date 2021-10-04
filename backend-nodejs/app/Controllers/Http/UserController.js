@@ -6,9 +6,12 @@ class UserController {
   async login({ auth, request }) {
     const { username, password } = request.all()
     const login = await auth.attempt(username, password)
+    const user =await User.findBy('username',username);
 
     return {
       data: {
+        username:user.username,
+        id:user.id,
         token: login.token,
         refreshToken: login.refreshToken,
       },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../ui.dart';
 import '../../../domain/domain.dart';
 import '../../../resources/resources.dart';
+import 'components/components.dart';
 import 'movie_details_presenter.dart';
 
 class MovieDetailsPage extends StatefulWidget {
@@ -33,13 +34,26 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.background,
-      appBar: AppBar(
-        title: Text('MovieDetails'),
-      ),
-      body: Observer(
-        builder: (_) {
-          return Container();
-        },
+      body: SafeArea(
+        child: Observer(
+          builder: (_) {
+            final url = entity.poster;
+            final file =
+                presenter.networkCacheClient.getFileFromNetworkUrl(url);
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  AppbarMovieComponent(
+                    image: file,
+                    onBack: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

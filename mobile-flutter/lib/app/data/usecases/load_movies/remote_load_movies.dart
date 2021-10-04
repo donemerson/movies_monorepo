@@ -9,7 +9,7 @@ class RemoteLoadMovies implements LoadMovies {
 
   @override
   Future<void> comment(int id, String value) async {
-    await httpClient.request(url: url + '/comment', method: 'post', body: {
+    await httpClient.request(url: url + 'comment', method: 'post', body: {
       'movie_id': id,
       'value': value,
     });
@@ -17,7 +17,7 @@ class RemoteLoadMovies implements LoadMovies {
 
   @override
   Future<void> rating(int id, int value) async {
-    await httpClient.request(url: url + '/rating', method: 'post', body: {
+    await httpClient.request(url: url + 'rating', method: 'post', body: {
       'movie_id': id,
       'value': value,
     });
@@ -25,7 +25,7 @@ class RemoteLoadMovies implements LoadMovies {
 
   @override
   Future<void> destroy(int id) async {
-    await httpClient.request(url: url + '/movie/$id', method: 'delete');
+    await httpClient.request(url: url + 'movie/$id', method: 'delete');
   }
 
   @override
@@ -33,7 +33,7 @@ class RemoteLoadMovies implements LoadMovies {
     final lista = <MovieEntity>[];
     try {
       final response =
-          await httpClient.request(url: url + '/movie', method: 'get');
+          await httpClient.request(url: url + 'movie', method: 'get');
       if (response != null && response is Map) {
         final data = response['data'];
 
@@ -55,7 +55,7 @@ class RemoteLoadMovies implements LoadMovies {
   Future<MovieEntity> show(int id) async {
     try {
       final response =
-          await httpClient.request(url: url + '/movie/$id', method: 'get');
+          await httpClient.request(url: url + 'movie/$id', method: 'get');
 
       if (response != null && response is Map) {
         final data = response['data'];
@@ -77,7 +77,7 @@ class RemoteLoadMovies implements LoadMovies {
   Future<void> store(MutationMovieEntity entity) async {
     try {
       await httpClient.request(
-        url: url + '/movie',
+        url: url + 'movie',
         method: 'post',
         body: RemoteMutationMovieModel.fromEntity(entity).toJson(),
       );
@@ -90,7 +90,7 @@ class RemoteLoadMovies implements LoadMovies {
   Future<void> update(int id, MutationMovieEntity entity) async {
     try {
       await httpClient.request(
-        url: url + '/movie/$id',
+        url: url + 'movie/$id',
         method: 'patch',
         body: RemoteMutationMovieModel.fromEntity(entity).toJson(),
       );

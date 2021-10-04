@@ -7,6 +7,7 @@ class ImageFile extends StatelessWidget {
   final Future<File?> image;
   final int? cacheWidth;
   final int? cacheHeight;
+  final BoxFit? boxfit;
   final Widget Function(BuildContext context) placeholderBuilder;
   const ImageFile(
     this.image, {
@@ -14,6 +15,7 @@ class ImageFile extends StatelessWidget {
     required this.placeholderBuilder,
     this.cacheWidth,
     this.cacheHeight,
+    this.boxfit,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class ImageFile extends StatelessWidget {
                 _file,
                 cacheHeight: cacheHeight,
                 cacheWidth: cacheWidth,
+                fit: boxfit,
               );
             } else {
               return Center(

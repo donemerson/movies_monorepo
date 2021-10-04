@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:movies_flix/app/data/data.dart';
+
 import 'package:movies_flix/main.dart';
 
 import '../../domain/domain.dart';
