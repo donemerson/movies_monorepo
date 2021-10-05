@@ -43,6 +43,9 @@ class MyApp extends StatelessWidget {
                 Provider.of<NetworkCacheClient>(context),
                 ModalRoute.of(_)!.settings.arguments as MovieEntity,
               ),
+          '/add_movie': (_) => makeAddMoviePage(
+                Provider.of<NetworkCacheClient>(context),
+              ),
         },
         initialRoute: '/',
       ),

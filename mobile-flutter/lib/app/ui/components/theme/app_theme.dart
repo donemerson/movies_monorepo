@@ -13,10 +13,6 @@ ThemeData makeAppTheme() {
   const dividerColor = MyColors.sombra2;
 
   return ThemeData(
-    appBarTheme: const AppBarTheme(
-      backgroundColor: MyColors.white,
-      centerTitle: true,
-    ),
     fontFamily: 'ProximaNova',
     primaryColor: primaryColor,
     primaryColorDark: primaryColorDark,

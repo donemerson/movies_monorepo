@@ -167,6 +167,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ElevatedButton(
                                 onPressed: () {
                                   presenter.comment(commentController.text);
+                                  commentController.clear();
                                 },
                                 child: Text("Comentar"),
                               ),

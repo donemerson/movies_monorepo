@@ -3,15 +3,15 @@
 ```
 Desenvolvimento online:
 
-# flutter run --dart-define=endpoint=http://docker_domain:333
+# flutter run --dart-define=endpoint=http://docker_domain:333 --dart-define=omdb_key=?????
 
-# flutter build apk  --dart-define=endpoint=http://docker_domain:333
+# flutter build apk  --dart-define=endpoint=http://docker_domain:333 --dart-define=omdb_key=?????
 
 Mock para desenvolvimento offline (limitado):
 
-# flutter run --dart-define=offline=true
+# flutter run --dart-define=offline=true --dart-define=omdb_key=?????
 
-# flutter build apk --profile --dart-define=offline=true
+# flutter build apk --profile --dart-define=offline=true --dart-define=omdb_key=?????
 
 ```
 
@@ -20,7 +20,7 @@ Mock para desenvolvimento offline (limitado):
 - UI e mensagens de erros
 - falta de testes
 - digitgra comentario vazio
-
+- se filme ja tiver sido adicionado
 ## Como você planejou abordar este projeto? Que tecnologis foram utilizadas?
 
 - Flutter version

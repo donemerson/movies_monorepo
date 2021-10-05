@@ -1,5 +1,6 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_flix/app/infra/navigator/my_navigator.dart';
 
 import '../../ui.dart';
 import '../../../domain/domain.dart';
@@ -36,6 +37,10 @@ class _MoviesPageState extends State<MoviesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.background,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => MyNavigator.toNamed('/add_movie'),
+      ),
       appBar: AppBar(
         leading: InkWell(
           child: Icon(

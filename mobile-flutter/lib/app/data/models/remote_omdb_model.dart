@@ -1,10 +1,6 @@
-import '../../data/data.dart';
-
 import '../../domain/domain.dart';
 
-class RemoteMovieModel {
-  final int id;
-  final int userId;
+class RemoteOMDbModel {
   final String title;
   final String year;
   final String rated;
@@ -28,15 +24,8 @@ class RemoteMovieModel {
   final String boxoffice;
   final String production;
   final String website;
-  int? userRating;
-  final RemoteUserModel user;
-  final List<RemoteCommentModel> comment;
-  final List<RemoteRatingModel> rating;
 
-  RemoteMovieModel({
-    required this.id,
-    required this.userRating,
-    required this.userId,
+  RemoteOMDbModel({
     required this.title,
     required this.year,
     required this.rated,
@@ -60,14 +49,9 @@ class RemoteMovieModel {
     required this.boxoffice,
     required this.production,
     required this.website,
-    required this.user,
-    required this.comment,
-    required this.rating,
   });
-  factory RemoteMovieModel.fromJson(Map json) {
-    return RemoteMovieModel(
-      id: json['id'],
-      userId: json['user_id'],
+  factory RemoteOMDbModel.fromJson(Map json) {
+    return RemoteOMDbModel(
       title: json['title'] ?? '',
       year: json['year'] ?? '',
       rated: json['rated'] ?? '',
@@ -91,68 +75,38 @@ class RemoteMovieModel {
       boxoffice: json['boxoffice'] ?? '',
       production: json['production'] ?? '',
       website: json['website'] ?? '',
-      userRating: json['userRating'],
-      user: RemoteUserModel.fromJson(json['user']),
-      comment: List.generate(
-        json['comment'].length,
-        (index) => RemoteCommentModel.fromJson(json['comment'][index]),
-      ),
-      rating: List.generate(
-        json['rating'].length,
-        (index) => RemoteRatingModel.fromJson(json['rating'][index]),
-      ),
     );
   }
 
-  MovieEntity toEntity() {
-    double avgRating = 0.0;
-
-    if (rating.isNotEmpty) {
-      if (rating.length == 1) {
-        avgRating = rating.first.value.toDouble();
-      } else {
-        avgRating =
-            rating.map((e) => e.value).reduce((a, b) => a + b) / rating.length;
-      }
-    }
-
-    return MovieEntity(
-        id: this.id,
-        userRating: this.userRating,
-        userId: this.userId,
-        title: this.title,
-        year: this.year,
-        rated: this.rated,
-        released: this.released,
-        runtime: this.runtime,
-        genre: this.genre,
-        director: this.director,
-        writer: this.writer,
-        actors: this.actors,
-        plot: this.plot,
-        language: this.language,
-        country: this.country,
-        awards: this.awards,
-        poster: this.poster,
-        metascore: this.metascore,
-        imdbrating: this.imdbrating,
-        imdbvotes: this.imdbvotes,
-        imdbid: this.imdbid,
-        type: this.type,
-        dvd: this.dvd,
-        boxoffice: this.boxoffice,
-        production: this.production,
-        website: this.website,
-        user: this.user.toEntity(),
-        comment: this.comment.map((e) => e.toEntity()).toList(),
-        rating: this.rating.map((e) => e.toEntity()).toList(),
-        avgRating: avgRating.toInt());
+  OMDbEntity toEntity() {
+    return OMDbEntity(
+      title: this.title,
+      year: this.year,
+      rated: this.rated,
+      released: this.released,
+      runtime: this.runtime,
+      genre: this.genre,
+      director: this.director,
+      writer: this.writer,
+      actors: this.actors,
+      plot: this.plot,
+      language: this.language,
+      country: this.country,
+      awards: this.awards,
+      poster: this.poster,
+      metascore: this.metascore,
+      imdbrating: this.imdbrating,
+      imdbvotes: this.imdbvotes,
+      imdbid: this.imdbid,
+      type: this.type,
+      dvd: this.dvd,
+      boxoffice: this.boxoffice,
+      production: this.production,
+      website: this.website,
+    );
   }
 
-  factory RemoteMovieModel.fromEntity(MovieEntity entity) => RemoteMovieModel(
-        id: entity.id,
-        userRating: entity.userRating,
-        userId: entity.userId,
+  factory RemoteOMDbModel.fromEntity(OMDbEntity entity) => RemoteOMDbModel(
         title: entity.title,
         year: entity.year,
         rated: entity.rated,
@@ -176,18 +130,10 @@ class RemoteMovieModel {
         boxoffice: entity.boxoffice,
         production: entity.production,
         website: entity.website,
-        user: RemoteUserModel.fromEntity(entity.user),
-        comment: entity.comment
-            .map((e) => RemoteCommentModel.fromEntity(e))
-            .toList(),
-        rating:
-            entity.rating.map((e) => RemoteRatingModel.fromEntity(e)).toList(),
       );
 
   Map toJson() {
     return {
-      'id': this.id,
-      'user_id': this.userId,
       'title': this.title,
       'year': this.year,
       'rated': this.rated,
@@ -211,10 +157,6 @@ class RemoteMovieModel {
       'boxoffice': this.boxoffice,
       'production': this.production,
       'website': this.website,
-      'userRating': this.userRating,
-      'user': this.user.toJson(),
-      'comment': this.comment.map((e) => e.toJson()).toList(),
-      'rating': this.rating.map((e) => e.toJson()).toList(),
     };
   }
 }
