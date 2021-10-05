@@ -41,7 +41,7 @@ class _AddMoviePageState extends State<AddMoviePage> {
       backgroundColor: MyColors.background,
       appBar: AppBar(
         title: Text(
-          'AddMovies',
+          R.string.msgAppbarAddMovies,
           style: MyTypography.proximaNovaBold16.apply(color: MyColors.accent),
         ),
       ),

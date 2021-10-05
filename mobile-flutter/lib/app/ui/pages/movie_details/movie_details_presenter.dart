@@ -9,5 +9,7 @@ abstract class MovieDetailsPresenter implements Disposable {
   Future<void> comment(String value);
   Future<void> rate(int value);
   NetworkCacheClient get networkCacheClient;
+  Future<void> updateTitle(String title);
+  Future<void> delete(int id);
   UIState get uiState;
 }

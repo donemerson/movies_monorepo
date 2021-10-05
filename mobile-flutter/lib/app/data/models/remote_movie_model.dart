@@ -28,6 +28,7 @@ class RemoteMovieModel {
   final String boxoffice;
   final String production;
   final String website;
+  final bool isOwner;
   int? userRating;
   final RemoteUserModel user;
   final List<RemoteCommentModel> comment;
@@ -35,6 +36,7 @@ class RemoteMovieModel {
 
   RemoteMovieModel({
     required this.id,
+    required this.isOwner,
     required this.userRating,
     required this.userId,
     required this.title,
@@ -66,6 +68,7 @@ class RemoteMovieModel {
   });
   factory RemoteMovieModel.fromJson(Map json) {
     return RemoteMovieModel(
+      isOwner: json['owner'],
       id: json['id'],
       userId: json['user_id'],
       title: json['title'] ?? '',
@@ -118,6 +121,7 @@ class RemoteMovieModel {
 
     return MovieEntity(
         id: this.id,
+        isOwner: this.isOwner,
         userRating: this.userRating,
         userId: this.userId,
         title: this.title,
@@ -152,6 +156,7 @@ class RemoteMovieModel {
   factory RemoteMovieModel.fromEntity(MovieEntity entity) => RemoteMovieModel(
         id: entity.id,
         userRating: entity.userRating,
+        isOwner: entity.isOwner,
         userId: entity.userId,
         title: entity.title,
         year: entity.year,
@@ -195,6 +200,7 @@ class RemoteMovieModel {
       'runtime': this.runtime,
       'genre': this.genre,
       'director': this.director,
+      'owner': this.isOwner,
       'writer': this.writer,
       'actors': this.actors,
       'plot': this.plot,

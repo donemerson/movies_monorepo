@@ -6,8 +6,8 @@ const CustomException = use("App/Exceptions/CustomException");
 
 class MovieController {
 
-  async index({ params }) {
-
+  async index({ params, auth }) {
+    const user = await auth.getUser();
     const page = params.page || 1;
     const limit = params.limit || 10;
 
@@ -18,9 +18,22 @@ class MovieController {
       .with("rating", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
       .with("comment", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
 
+    let data = await query.paginate(page, limit);
+    data = data.toJSON();
 
+    data['data'].forEach((e, _, __) => {
+      e['owner'] = false;
+      if (e.user_id == user.id) {
+        e['owner'] = true;
+      }
+      e.rating.forEach((e2, _, __) => {
+        if (e2.user.id == user.id) {
+          e['userRating'] = e2.value;
+        }
+      });
 
-    const data = await query.paginate(page, limit);
+    })
+
 
     return data;
 
@@ -42,6 +55,11 @@ class MovieController {
     let data = await query.first();
     data = data.toJSON();
 
+    data['owner'] = false;
+
+    if (data.user_id == user.id) {
+      data['owner'] = true;
+    }
     data.rating.forEach((e, _, __) => {
       if (e.user.id == user.id) {
         data['userRating'] = e.value;
@@ -123,7 +141,7 @@ class MovieController {
   }
 
   getData(data) {
-    return {
+    data = {
       title: data.title,
       year: data.year,
       rated: data.rated,
@@ -148,7 +166,17 @@ class MovieController {
       production: data.production,
       website: data.website
     };
+
+    // Removendo atributos nulos
+    const keys = Object.keys(data);
+    for (const kIndex in keys) {
+      const key = keys[kIndex];
+      if (data[key] === null) delete data[key];
+    }
+    return data;
+
   }
+
 
 
 

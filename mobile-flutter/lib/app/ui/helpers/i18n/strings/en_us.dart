@@ -1,13 +1,26 @@
 import './translation.dart';
 
 class EnUs implements Translation {
-  String get msgEmailInUse => 'O username já está em uso.';
-  String get msgInvalidCredentials => 'Credenciais inválidas.';
-  String get msgInvalidField => 'Campo inválido';
-  String get msgRequiredField => 'Campo obrigatório';
-  String get msgUnexpectedError =>
-      'Algo errado aconteceu. Tente novamente em breve.';
+  String get msgAppbarAddMovies => 'Add Movies';
 
+  String get msgAppbarAuth => 'Auth';
+
+  String get msgAppbarMovies => 'Moveis';
+
+  String get msgComments => 'Comments';
+
+  String get msgDelete => 'Delete';
+
+  String get msgEdit => 'Edit';
+  String get msgPassword => 'Password';
+
+  String get msgSave => 'Save';
+
+  String get msgTitle => 'Title';
+
+  String get msgUsername => 'Username';
+
+  String get msgYourRating => 'Your rating';
   String get msgSingIn => 'SingIn';
   String get msgSingUp => 'SingUp';
 }

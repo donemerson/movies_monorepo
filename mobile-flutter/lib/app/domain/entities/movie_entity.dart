@@ -26,6 +26,7 @@ class MovieEntity {
   final String boxoffice;
   final String production;
   final String website;
+  final bool isOwner;
   final UserEntity user;
   final int avgRating;
   final int? userRating;
@@ -33,6 +34,7 @@ class MovieEntity {
   final List<RatingEntity> rating;
 
   MovieEntity({
+    required this.isOwner,
     required this.id,
     required this.userId,
     required this.title,

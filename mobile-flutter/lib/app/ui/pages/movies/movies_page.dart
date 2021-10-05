@@ -50,7 +50,7 @@ class _MoviesPageState extends State<MoviesPage> {
           onTap: presenter.logoft,
         ),
         title: Text(
-          'Movies',
+          R.string.msgAppbarMovies,
           style: MyTypography.proximaNovaBold16.apply(color: MyColors.accent),
         ),
       ),

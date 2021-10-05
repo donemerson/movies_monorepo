@@ -1,5 +1,6 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_flix/app/infra/infra.dart';
 
 import '../../ui.dart';
 import '../../../domain/domain.dart';
@@ -17,6 +18,8 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   final commentController = TextEditingController();
+  final titleController = TextEditingController();
+  final isEditting = ValueNotifier<bool>(false);
   @override
   void initState() {
     super.initState();
@@ -25,6 +28,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
   void dispose() {
     commentController.dispose();
+    titleController.dispose();
     widget.presenter.dispose();
     super.dispose();
   }
@@ -32,11 +36,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   MovieDetailsPresenter get presenter => widget.presenter;
   MovieEntity get entity => presenter.entity;
   Map<String, Widget> get entityValues => {
-        'id': generateListTile(title('id'), subtitle(entity.id.toString())),
-        'title': generateListTile(
-          title('title'),
-          subtitle(entity.title),
-        ),
         'year': generateListTile(
           title('year'),
           subtitle(entity.year),
@@ -208,67 +207,131 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   final rattingValue = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColors.background,
-      body: SafeArea(
-        child: Observer(
-          builder: (_) {
-            if (state != UIState.done)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            if (rattingValue.value != entity.avgRating) {
-              rattingValue.value = entity.avgRating;
-            }
-            final url = entity.poster;
-            final file =
-                presenter.networkCacheClient.getFileFromNetworkUrl(url);
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  AppbarMovieComponent(
-                    image: file,
-                    onBack: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  Builder(builder: (_) {
-                    return Container(
-                      // margin: EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        title: title('Sua avaliação: '),
-                        subtitle: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ...List.generate(5, (index) {
-                              final ratting = (index + 1);
+    return WillPopScope(
+      onWillPop: () async {
+        MyNavigator.offNamed('/movies');
 
-                              return ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    ratting == entity.userRating
-                                        ? MyColors.accent
-                                        : MyColors.blue1,
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: MyColors.background,
+        body: SafeArea(
+          child: Observer(
+            builder: (_) {
+              if (state != UIState.done)
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              if (rattingValue.value != entity.avgRating) {
+                rattingValue.value = entity.avgRating;
+              }
+              final url = entity.poster;
+              final file =
+                  presenter.networkCacheClient.getFileFromNetworkUrl(url);
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    AppbarMovieComponent(
+                      image: file,
+                      onBack: () {
+                        MyNavigator.offNamed('/movies');
+                      },
+                    ),
+                    Builder(builder: (_) {
+                      return Container(
+                        // margin: EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title: title('Sua avaliação: '),
+                          subtitle: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ...List.generate(5, (index) {
+                                final ratting = (index + 1);
+
+                                return ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                      ratting == entity.userRating
+                                          ? MyColors.accent
+                                          : MyColors.blue1,
+                                    ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  presenter.rate(ratting);
-                                },
-                                child: Text((ratting).toString()),
-                              );
-                            })
-                          ],
+                                  onPressed: () {
+                                    presenter.rate(ratting);
+                                  },
+                                  child: Text((ratting).toString()),
+                                );
+                              })
+                            ],
+                          ),
                         ),
+                      );
+                    }),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: isEditting,
+                      builder: (_, value, child) {
+                        titleController.text = entity.title;
+                        if (value) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                  child: TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: R.string.msgTitle),
+                                controller: titleController,
+                              )),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  presenter.updateTitle(titleController.text);
+                                  isEditting.value = false;
+                                },
+                                child: Text(R.string.msgSave),
+                              )
+                            ],
+                          );
+                        } else {
+                          return child!;
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: generateListTile(
+                              title('title'),
+                              subtitle(entity.title),
+                            ),
+                          ),
+                          if (entity.isOwner)
+                            ElevatedButton(
+                              onPressed: () {
+                                isEditting.value = true;
+                              },
+                              child: Text(R.string.msgEdit),
+                            )
+                        ],
                       ),
-                    );
-                  }),
-                  ...entityValues.entries.toList().map((e) => e.value)
-                ],
-              ),
-            );
-          },
+                    ),
+                    ...entityValues.entries.toList().map((e) => e.value),
+                    if (entity.isOwner)
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
+                        child: ElevatedButton(
+                          child: Text('Excluir'),
+                          onPressed: () async {
+                            await presenter.delete(entity.id);
+                            MyNavigator.offNamed('/movies');
+                          },
+                        ),
+                      )
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

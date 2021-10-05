@@ -48,12 +48,12 @@ class _AuthPageState extends State<AuthPage> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Text('Username'),
+                Text(R.string.msgUsername),
                 TextFormField(
                   controller: controllers['username'],
                 ),
                 SizedBox(height: 20),
-                Text('Password'),
+                Text(R.string.msgPassword),
                 TextFormField(
                   controller: controllers['password'],
                 ),

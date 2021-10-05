@@ -83,4 +83,24 @@ class StoreMovieDetailsPresenter implements MovieDetailsPresenter {
 
   @override
   void dispose() {}
+
+  @override
+  Future<void> updateTitle(String title) async {
+    final _modelMutation = RemoteMutationMovieModel(title: title);
+    _loadMovies.update(entity.id, _modelMutation.toEntity());
+
+    var _model = RemoteMovieModel.fromEntity(entity);
+    final json = _model.toJson();
+    json['title'] = title;
+    _model = RemoteMovieModel.fromJson(json);
+    runInAction(() {
+      _movieEntity.value = _model.toEntity();
+    }, name: 'update movie title');
+  }
+
+  @override
+  Future<void> delete(int id) async {
+    _state = UIState.loading;
+    await _loadMovies.destroy(id);
+  }
 }

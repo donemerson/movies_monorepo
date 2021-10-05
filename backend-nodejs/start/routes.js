@@ -24,10 +24,10 @@ Route.post("auth", "UserController.login");
 Route.post("rating", "RatingController.store").middleware('auth');
 Route.post("comment", "CommentController.store").middleware('auth');
 
-Route.get("movie", "MovieController.index");
-Route.get("movie/:id", "MovieController.show");
+Route.get("movie", "MovieController.index").middleware('auth');
+Route.get("movie/:id", "MovieController.show").middleware('auth');
 Route.post("movie", "MovieController.store").middleware('auth');
-Route.patch("movie/:id", "MovieController.update").middleware('auth');
+Route.patch("movie/:id", "MovieController.update").middleware(['auth','emptyStringToNull']);
 Route.delete("movie/:id", "MovieController.destroy").middleware('auth');
 
 
