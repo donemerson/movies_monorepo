@@ -18,9 +18,10 @@ Mock para desenvolvimento offline (limitado):
 ## Bugs conhecidos
 - Caso limpe o storage com app aberto
 - UI e mensagens de erros
-- falta de testes
+- falta alguns de testes de unidade
 - digitgra comentario vazio
-- se filme ja tiver sido adicionado
+- se filme ja tiver sido adicionado 
+
 ## Como você planejou abordar este projeto? Que tecnologis foram utilizadas?
 
 - Flutter version

@@ -55,7 +55,9 @@ class LocalMockLoadMovie {
 
   static const showResponse = <String, dynamic>{
     "data": {
+      "owner": true,
       "id": 2,
+      "userRating": 1,
       "user_id": 1,
       "title": "Captain Marvel",
       "year": "2019",
@@ -123,6 +125,8 @@ class LocalMockLoadMovie {
     "lastPage": 1,
     "data": [
       {
+        "owner": true,
+        "userRating": 1,
         "id": 2,
         "user_id": 1,
         "title": "Captain Marvel",
