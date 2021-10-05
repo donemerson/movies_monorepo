@@ -1,7 +1,10 @@
 
 # Como rodar o seu projeto
 ```
-docker-compose up
+# docker-compose up
+
+Postman collection: https://www.getpostman.com/collections/eacd4132edffd7343512
+
 ```
 
 # Bugs conhecidos
