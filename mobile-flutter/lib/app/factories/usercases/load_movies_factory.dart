@@ -11,7 +11,9 @@ LoadMovies makeRemoteLoadMovies([LocalUser? localUser]) {
   late HttpClient httpClient;
 
   if (_offline) {
-    httpClient = HttpAdapter(LocalMockLoadMovie.httpClient);
+    httpClient = HttpAdapter(
+      LocalMockLoadMovie.httpClient,
+    );
   } else {
     if (localUser == null) {
       httpClient = makeHttpClient();

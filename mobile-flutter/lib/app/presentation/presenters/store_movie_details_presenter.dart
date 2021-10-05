@@ -7,6 +7,10 @@ import '../../ui/ui.dart';
 class StoreMovieDetailsPresenter implements MovieDetailsPresenter {
   final LoadMovies _loadMovies;
 
+  late final Observable<UIState> _stateObs;
+  @override
+  UIState get uiState => _stateObs.value;
+
   @override
   MovieEntity get entity => _movieEntity.value;
   late final Observable<MovieEntity> _movieEntity;
@@ -22,19 +26,38 @@ class StoreMovieDetailsPresenter implements MovieDetailsPresenter {
     MovieEntity movieEntity,
     this.localUser,
   ) {
+    _stateObs = Observable<UIState>(UIState.loading, name: 'UIState');
+
     _movieEntity = Observable(movieEntity);
+    _load();
+  }
+
+  set _state(UIState value) =>
+      runInAction(() => _stateObs.value = value, name: 'setUIState');
+
+  void _load() async {
+    try {
+      _movieEntity.value = await _loadMovies.show(_movieEntity.value.id);
+      _state = UIState.done;
+    } catch (e) {
+      _state = UIState.error;
+    }
   }
 
   @override
   Future<void> rate(int value) async {
     final _userEntity = await localUser.load();
-    final _model = RemoteMovieModel.fromEntity(entity);
+    var _model = RemoteMovieModel.fromEntity(entity);
+
     _model.rating.add(
       RemoteRatingModel(
         user: RemoteUserModel.fromEntity(_userEntity!),
         value: value,
       ),
     );
+    var json = _model.toJson();
+    json['userRating'] = value;
+    _model = RemoteMovieModel.fromJson(json);
     runInAction(() {
       _movieEntity.value = _model.toEntity();
     });
@@ -45,7 +68,8 @@ class StoreMovieDetailsPresenter implements MovieDetailsPresenter {
   Future<void> comment(String value) async {
     final _userEntity = await localUser.load();
     final _model = RemoteMovieModel.fromEntity(entity);
-    _model.comment.add(
+    _model.comment.insert(
+      0,
       RemoteCommentModel(
         user: RemoteUserModel.fromEntity(_userEntity!),
         value: value,

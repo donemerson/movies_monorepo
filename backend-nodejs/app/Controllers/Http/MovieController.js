@@ -18,7 +18,7 @@ class MovieController {
       .with("rating", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
       .with("comment", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
 
-  
+
 
     const data = await query.paginate(page, limit);
 
@@ -28,24 +28,25 @@ class MovieController {
   }
 
 
-  async show({ params }) {
+  async show({ params, auth }) {
     const query = Movie.query();
+    const user = await auth.getUser();
     query
       .orderBy("created_at", "desc")
       .where("is_deleted", false)
       .where("id", params.id)
-      .with("comment", (builder) => {
-        builder.select()
-          .orderBy("created_at", "desc")
-          .with("user", (builder) => builder.select(['username', 'id']));
-      })
-      .with("rating", (builder) => {
-        builder.select()
-          .orderBy("created_at", "desc")
-          .with("user", (builder) => builder.select(['username', 'id']));
-      });
+      .with("user", (builder) => builder.select())
+      .with("rating", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
+      .with("comment", (builder) => builder.select().orderBy("created_at", "desc").with("user", (builder) => builder.select(['username', 'id'])))
 
-    const data = await query.first();
+    let data = await query.first();
+    data = data.toJSON();
+
+    data.rating.forEach((e, _, __) => {
+      if (e.user.id == user.id) {
+        data['userRating'] = e.value;
+      }
+    });
 
     return {
       data: data

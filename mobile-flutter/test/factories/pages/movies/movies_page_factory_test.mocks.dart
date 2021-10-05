@@ -14,18 +14,21 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
+// ignore: camel_case_types
 class _FakeWidget_0 extends _i1.Fake implements _i2.Widget {
   @override
   String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
       super.toString();
 }
 
+// ignore: camel_case_types
 class _FakeInheritedWidget_1 extends _i1.Fake implements _i2.InheritedWidget {
   @override
   String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
       super.toString();
 }
 
+// ignore: camel_case_types
 class _FakeDiagnosticsNode_2 extends _i1.Fake implements _i3.DiagnosticsNode {
   @override
   String toString(

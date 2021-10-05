@@ -1,8 +1,4 @@
-import 'entities.dart';
-
-class MovieEntity {
-  final int id;
-  final int userId;
+class OMDbEntity {
   final String title;
   final String year;
   final String rated;
@@ -26,15 +22,8 @@ class MovieEntity {
   final String boxoffice;
   final String production;
   final String website;
-  final UserEntity user;
-  final int avgRating;
-  final int? userRating;
-  final List<CommentEntity> comment;
-  final List<RatingEntity> rating;
 
-  MovieEntity({
-    required this.id,
-    required this.userId,
+  OMDbEntity({
     required this.title,
     required this.year,
     required this.rated,
@@ -58,10 +47,5 @@ class MovieEntity {
     required this.boxoffice,
     required this.production,
     required this.website,
-    required this.userRating,
-    required this.user,
-    required this.comment,
-    required this.rating,
-    required this.avgRating,
   });
 }

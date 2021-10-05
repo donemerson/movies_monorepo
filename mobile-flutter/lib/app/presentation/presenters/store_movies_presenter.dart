@@ -9,6 +9,7 @@ class StoreMoviesPresenter implements MoviesPresenter {
 
   late final LoadMovies _loadMovies;
   late final Observable<UIState> _stateObs;
+  final LogoftUser logoftUser;
 
   @override
   final NetworkCacheClient networkCacheClient;
@@ -17,7 +18,8 @@ class StoreMoviesPresenter implements MoviesPresenter {
   late final ObservableList<MovieEntity> movies;
 
   // constructor
-  StoreMoviesPresenter(this._loadMovies, this.networkCacheClient) {
+  StoreMoviesPresenter(
+      this._loadMovies, this.networkCacheClient, this.logoftUser) {
     movies = ObservableList<MovieEntity>(name: 'movies');
     _stateObs = Observable<UIState>(UIState.loading, name: 'UIState');
     page = 0;
@@ -80,4 +82,9 @@ class StoreMoviesPresenter implements MoviesPresenter {
   // page control
   void _resetPage() => page = 1;
   void _incrementPage() => page++;
+
+  @override
+  Future<void> logoft() async {
+    await logoftUser.logoft();
+  }
 }

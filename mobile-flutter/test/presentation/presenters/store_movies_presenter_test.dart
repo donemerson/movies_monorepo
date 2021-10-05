@@ -1,6 +1,9 @@
 import 'package:movies_flix/app/data/data.dart';
 import 'package:movies_flix/app/domain/domain.dart';
 import 'package:movies_flix/app/factories/network_cache/network_cache.dart';
+// ignore: unused_import
+import 'package:movies_flix/app/factories/usercases/local_user_factory.dart';
+import 'package:movies_flix/app/factories/usercases/logoft_user_factory.dart';
 import 'package:movies_flix/app/presentation/presentation.dart';
 import 'package:movies_flix/app/ui/helpers/helpers.dart';
 import 'package:movies_flix/app/ui/pages/pages.dart';
@@ -18,7 +21,8 @@ void main() {
   final loadMovies = MockLoadMovies();
 
   setUp(() {
-    presenter = StoreMoviesPresenter(loadMovies, makeNetworkCacheClient());
+    presenter = StoreMoviesPresenter(
+        loadMovies, makeNetworkCacheClient(), makeRemoteLogoftUser());
   });
 
   tearDown(() {

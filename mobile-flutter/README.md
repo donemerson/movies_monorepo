@@ -19,6 +19,7 @@ Mock para desenvolvimento offline (limitado):
 - Caso limpe o storage com app aberto
 - UI e mensagens de erros
 - falta de testes
+- digitgra comentario vazio
 
 ## Como você planejou abordar este projeto? Que tecnologis foram utilizadas?
 
@@ -63,7 +64,6 @@ Mock para desenvolvimento offline (limitado):
 - Melhoraria navegação de rotas
 - Melhorara o offline
 - Faria um mockup
-
 
 
 ## Github Actions

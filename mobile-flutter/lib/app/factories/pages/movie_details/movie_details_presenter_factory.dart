@@ -11,7 +11,7 @@ MovieDetailsPresenter makeStoreMovieDetailsPresenter(
   MovieEntity movieEntity,
 ) =>
     StoreMovieDetailsPresenter(
-      makeRemoteLoadMovies(),
+      makeRemoteLoadMovies(makeLocalUser()),
       networkCacheClient,
       movieEntity,
       makeLocalUser(),

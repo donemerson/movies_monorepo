@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:movies_flix/app/domain/domain.dart';
-
-import 'package:movies_flix/app/resources/my_typography.dart';
 
 import '../../../ui.dart';
 

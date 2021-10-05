@@ -2,7 +2,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
 import '../../ui.dart';
-import '../../../domain/domain.dart';
 import '../../../resources/resources.dart';
 import 'auth_presenter.dart';
 

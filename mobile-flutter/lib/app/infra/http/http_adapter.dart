@@ -8,6 +8,7 @@ import '../../data/http/http.dart';
 class HttpAdapter implements HttpClient {
   final Client client;
   final Future<Map<String, String>>? headers;
+
   HttpAdapter(this.client, [this.headers]);
 
   Future<dynamic> request({
@@ -58,7 +59,7 @@ class HttpAdapter implements HttpClient {
     return _handleResponse(response);
   }
 
-  dynamic _handleResponse(Response response) {
+  dynamic _handleResponse(Response response) async {
     switch (response.statusCode) {
       case 200:
         return response.body.isEmpty ? null : jsonDecode(response.body);

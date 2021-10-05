@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../app/ui/ui.dart';
 import '../app/factories/factories.dart';
+import 'app/infra/navigator/my_navigator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static final navigatorKey = GlobalKey<NavigatorState>();
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       builder: (context, _) => MaterialApp(
         title: 'Movies',
         theme: Provider.of<ThemeData>(context),
-        navigatorKey: navigatorKey,
+        navigatorKey: MyNavigator.navigatorKey,
         routes: {
           '/': (_) => makeAuthPage(),
           '/movies': (_) =>

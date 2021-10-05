@@ -37,7 +37,17 @@ class _MoviesPageState extends State<MoviesPage> {
     return Scaffold(
       backgroundColor: MyColors.background,
       appBar: AppBar(
-        title: Text('Movies'),
+        leading: InkWell(
+          child: Icon(
+            Icons.logout,
+            color: MyColors.accent,
+          ),
+          onTap: presenter.logoft,
+        ),
+        title: Text(
+          'Movies',
+          style: MyTypography.proximaNovaBold16.apply(color: MyColors.accent),
+        ),
       ),
       body: Observer(
         builder: (_) {

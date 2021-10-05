@@ -3,6 +3,7 @@ const Movie = use("App/Models/Movie");
 const Rating = use("App/Models/Rating");
 class RatingController {
     async store({ auth, request, params }) {
+
         const { movie_id, value } = request.all();
 
         const user = await auth.getUser();
@@ -23,8 +24,10 @@ class RatingController {
         }
 
         return {
-            data:{}
+            data: {}
         };
+
+
     }
 }
 

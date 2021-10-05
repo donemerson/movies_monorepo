@@ -28,12 +28,14 @@ class RemoteMovieModel {
   final String boxoffice;
   final String production;
   final String website;
+  int? userRating;
   final RemoteUserModel user;
   final List<RemoteCommentModel> comment;
   final List<RemoteRatingModel> rating;
 
   RemoteMovieModel({
     required this.id,
+    required this.userRating,
     required this.userId,
     required this.title,
     required this.year,
@@ -89,6 +91,7 @@ class RemoteMovieModel {
       boxoffice: json['boxoffice'],
       production: json['production'],
       website: json['website'],
+      userRating: json['userRating'],
       user: RemoteUserModel.fromJson(json['user']),
       comment: List.generate(
         json['comment'].length,
@@ -115,6 +118,7 @@ class RemoteMovieModel {
 
     return MovieEntity(
         id: this.id,
+        userRating: this.userRating,
         userId: this.userId,
         title: this.title,
         year: this.year,
@@ -147,6 +151,7 @@ class RemoteMovieModel {
 
   factory RemoteMovieModel.fromEntity(MovieEntity entity) => RemoteMovieModel(
         id: entity.id,
+        userRating: entity.userRating,
         userId: entity.userId,
         title: entity.title,
         year: entity.year,
@@ -206,6 +211,7 @@ class RemoteMovieModel {
       'boxoffice': this.boxoffice,
       'production': this.production,
       'website': this.website,
+      'userRating': this.userRating,
       'user': this.user.toJson(),
       'comment': this.comment.map((e) => e.toJson()).toList(),
       'rating': this.rating.map((e) => e.toJson()).toList(),

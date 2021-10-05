@@ -9,4 +9,5 @@ abstract class MoviesPresenter implements Disposable {
   Future<void> reload();
   Future<void> index();
   NetworkCacheClient get networkCacheClient;
+  Future<void> logoft();
 }
